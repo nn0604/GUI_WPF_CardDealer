@@ -104,9 +104,26 @@ namespace W1002WPFCardDealer
             }
 
             Array.Sort(handnum);
-            Array.Sort(handsuit);
 
-            for (int i = 0; i < hand.Length; i++)
+            for (int i = 0; i < hand.Length-1; i++) // 스트레이트 확인
+            {
+                if (handnum[i]+1 == handnum[i+1]) straightcount++;
+            }
+            if(straightcount == 4) // 백 스트레이트 확인
+            {
+                if (handnum[0] == 0) isBackStraight = true;
+            }
+            if(straightcount == 3)
+                if (handnum[0] == 0 && handnum[1] == 9) isMountain = true; // 마운틴 확인
+
+
+            if (handnum.Distinct().Count() == 4) paircount = 1;
+            else if (handnum.Distinct().Count() == 3) paircount = 2;
+            else if (handnum.Distinct().Count() == 2) paircount = 3;
+
+            if (handsuit.Distinct().Count() == 1) isSuitAllMatch = true; // 플러시 확인
+
+            for (int i = 0; i < hand.Length; i++) // 
             {
                 for (int j = 0; j < hand.Length; j++)
                 {
@@ -117,25 +134,6 @@ namespace W1002WPFCardDealer
                     }
                 }
             }
-
-            for (int i = 0; i < hand.Length-1; i++) // 스트레이트 확인
-            {
-                if (handnum[i]+1 == handnum[i+1]) straightcount++;
-            }
-            if(straightcount == 4) // 백 스트레이트 플러시 확인
-            {
-                if (handnum[0] == 0) isBackStraight = true;
-            }
-            if(straightcount == 3)
-            if (handnum[0] == 0 && handnum[1] == 9) isMountain = true; // 마운틴 확인
-
-
-            if (handnum.Distinct().Count() == 4) paircount = 1;
-            else if (handnum.Distinct().Count() == 3) paircount = 2;
-            else if (handnum.Distinct().Count() == 2) paircount = 3;
-
-            if (handsuit.Distinct().Count() == 1) isSuitAllMatch = true; // 플러시 확인
-
 
             if (paircount == 0) handname = "탑";
             if (paircount == 1) handname = "원페어";
@@ -176,19 +174,19 @@ namespace W1002WPFCardDealer
                 simulation[i] = ReadHand(num);
             }
             
-            MessageBox.Show("탑 :" + simulation.Where(x => x.Equals("탑")).Count() +
-                            "\n원페어 :" + simulation.Where(x => x.Equals("원페어")).Count() +
-                            "\n투페어 :" + simulation.Where(x => x.Equals("투페어")).Count() +
-                            "\n트리플 :" + simulation.Where(x => x.Equals("트리플")).Count() +
-                            "\n스트레이트 :" + simulation.Where(x => x.Equals("스트레이트")).Count() +
-                            "\n백 스트레이트 :" + simulation.Where(x => x.Equals("백 스트레이트")).Count() +
-                            "\n마운틴 :" + simulation.Where(x => x.Equals("마운틴")).Count() +
-                            "\n플러시 :" + simulation.Where(x => x.Equals("플러시")).Count() +
-                            "\n풀하우스 :" + simulation.Where(x => x.Equals("풀하우스")).Count() +
-                            "\n포카드 :" + simulation.Where(x => x.Equals("포카드")).Count() +
-                            "\n스트레이트 플러시 :" + simulation.Where(x => x.Equals("스트레이트 플러시")).Count() +
-                            "\n백 스트레이트 플러시 :" + simulation.Where(x => x.Equals("백 스트레이트 플러시")).Count() +
-                            "\n로열 스트레이트 플러시 :" + simulation.Where(x => x.Equals("로열 스트레이트 플러시")).Count()
+            MessageBox.Show("탑 :" + simulation.Count(x => x == "탑") +
+                            "\n원페어 :" + simulation.Count(x => x == "원페어") +
+                            "\n투페어 :" + simulation.Count(x => x == "투페어") +
+                            "\n트리플 :" + simulation.Count(x => x == "트리플") +
+                            "\n스트레이트 :" + simulation.Count(x => x == "스트레이트") +
+                            "\n백 스트레이트 :" + simulation.Count(x => x == "백 스트레이트") +
+                            "\n마운틴 :" + simulation.Count(x => x == "마운틴") +
+                            "\n플러시 :" + simulation.Count(x => x == "플러시") +
+                            "\n풀하우스 :" + simulation.Count(x => x == "풀하우스") +
+                            "\n포카드 :" + simulation.Count(x => x == "포카드") +
+                            "\n스트레이트 플러시 :" + simulation.Count(x => x == "스트레이트 플러시") +
+                            "\n백 스트레이트 플러시 :" + simulation.Count(x => x == "백 스트레이트 플러시") +
+                            "\n로열 스트레이트 플러시 :" + simulation.Count(x => x == "로열 스트레이트 플러시")
                 );
         }
 
@@ -197,9 +195,8 @@ namespace W1002WPFCardDealer
             Random r = new Random();
             int[] num = new int[5];
             string handname;
-            bool roopout = true;
 
-            while(roopout)
+            while (true)
             {
                 for (int i = 0; i < num.Length; i++)
                 {
@@ -213,7 +210,7 @@ namespace W1002WPFCardDealer
 
                 Array.Sort(num);
                 handname = ReadHand(num);
-                if (handname == "로열 스트레이트 플러시") roopout = false;
+                if (handname == "로열 스트레이트 플러시") break;
             }
                 
 

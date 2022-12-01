@@ -9,14 +9,14 @@
     <DockPanel>
         <DockPanel DockPanel.Dock="Bottom">
             <Button x:Name="BtnDeal" Content="카드 분배" Padding="8" Margin="16" Click="OnDeal" Width="150" HorizontalAlignment="Left"/>
-            <Button x:Name="Btn10000"  Content="10000번 시행" Padding="8" Margin="16" Click="Simulator" Width="150"/>
-            <Button x:Name="BtnWhilehigh"  Content="로티플 뽑기" Padding="8" Margin="16" Click="HighHand" Width="100" HorizontalAlignment="Right"/>
+            <Button Content="10000번 시행" Padding="8" Margin="16" Click="Simulator" Width="150"/>
+            <Button Content="로티플 뽑기" Padding="8" Margin="16" Click="HighHand" Width="100" HorizontalAlignment="Right"/>
         </DockPanel>
         <TextBlock x:Name="Hand"
                    DockPanel.Dock="Bottom"
                    Background="#040"
                    TextAlignment="Right"
-                   FontSize="40">족보 :</TextBlock>
+                   FontSize="40">족보는 이곳에 표시됨</TextBlock>
         <UniformGrid Rows="1"
                      Background="#040">
             <Image x:Name="Card1"
